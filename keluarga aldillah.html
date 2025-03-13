@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Keluarga</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('gambar/a (1).jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        header {
+            background-color: rgba(0, 123, 255, 0.8);
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-bottom: 4px solid #0056b3;
+        }
+
+        nav {
+            background-color: rgba(0, 86, 179, 0.9);
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            transition: color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        .content {
+            display: none;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 250px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        img.profile {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 3px solid #0056b3;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-items: center;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            display: block;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .footer-text {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+        }
+    </style>
+    <script>
+        function showContent(id) {
+            let sections = document.querySelectorAll('.content');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <header><b>SELAMAT DATANG DI WEBSITE KELUARGA AGUSNADIN</b></header>
+
+    <nav>
+        <a onclick="showContent('beranda')">Beranda</a>
+        <a onclick="showContent('profil')">Profil Keluarga</a>
+        <a onclick="showContent('galeri')">Galeri</a>
+    </nav>
+    <div id="beranda" class="content active">        
+    </div>
+
+    <div id="profil" class="content">
+        <h2>Profil Keluarga</h2>
+        <div class="card-container">
+            <div class="card">
+                <img class="profile" src="gambar/papa.jpg" alt="Ayah">
+                <h3>Agusnadin</h3>
+                <p><b>Pekerjaan:</b> Pekerja Keras</p>
+                <p><i>"Sosok pemimpin yang penuh dedikasi dalam keluarga."</i></p>
+            </div>
+            <div class="card">
+                <img class="profile" src="gambar/mama.jpg" alt="Ibu">
+                <h3>Yuli</h3>
+                <p><b>Pekerjaan:</b> Ibu Rumah Tangga</p>
+                <p><i>"Pilar kasih sayang dan kekuatan dalam keluarga."</i></p>
+            </div>
+            <div class="card">
+                <img class="profile" src="gambar/Aldillah.jpg" alt="Aldillah">
+                <h3>Aldillah</h3>
+                <p><b>Hobi:</b> Healing</p>
+                <p><i>"Menikmati hidup dengan penuh petualangan."</i></p>
+            </div>
+            <div class="card">
+                <img class="profile" src="gambar/rehan.jpg" alt="Raihan">
+                <h3>M. Raihan</h3>
+                <p><b>Hobi:</b> Semuanya</p>
+                <p><i>"Ketangguhan dan kesabaran ada dalam setiap lemparan kailnya."</i></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="galeri" class="content">
+        <h2>Galeri Keluarga</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="gambar/bali1.jpg" alt="Keluarga 1">
+                <div class="caption">Liburan di Bali</div>
+            </div>
+            <div class="gallery-item">
+                <img src="gambar/bali3.jpg" alt="Keluarga 2">
+                <div class="caption">Momen Kebersamaan</div>
+            </div>
+            <div class="gallery-item">
+                <img src="gambar/a (2).jpg" alt="Keluarga 3">
+                <div class="caption">Kenangan Indah</div>
+            </div>
+            <div class="gallery-item">
+                <img src="gambar/a (3).jpg" alt="Keluarga 4">
+                <div class="caption">Kebahagiaan Keluarga</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        <i>"Keluarga adalah tempat di mana cinta tak terbatas, kenangan tercipta, dan kebahagiaan selalu menemukan jalan pulangnya. <br>
+            Website ini hadir sebagai ruang untuk berbagi cerita, momen berharga, dan ikatan yang terus menguat seiring waktu."<br></i>
+    </div>
+</body>
+</html>
