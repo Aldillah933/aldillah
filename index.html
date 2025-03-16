@@ -3,59 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pelanggan PLN</title>
+    <title>Pemetaan Data Pelanggan</title>
+    
+    <!-- Gunakan CDNJS agar stabil -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <style>
+        #map { height: 100vh; }
+    </style>
 </head>
-<style>
-    .button {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-</style>
 <body>
-    <table border="1">
-        <thead id="table-head">
-        </thead>
-        <tbody id="data-body"></tbody>
-    </table>
+    <div id="map"></div>
 
+    <!-- Leaflet JS dari CDNJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
     <script>
-        fetch("https://script.google.com/macros/s/AKfycbyIAFOh9FYp276GUrdvDmwAE6ckVxrInLbZFFd5pb2ectuYHYU3Pw3wLbBlAAnSlnrG/exec")
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 0) return;
-            
-            let tableHead = document.getElementById("table-head");
-            let tableBody = document.getElementById("data-body");
-            
-            // Membuat header tabel berdasarkan data
-            let headerRow = "<tr><th>No</th>";
-            Object.keys(data[0]).forEach(key => {
-                headerRow += `<th>${key}</th>`;
-            });
-            headerRow += "</tr>";
-            tableHead.innerHTML = headerRow;
-            
-            // Mengisi data dalam tabel
-            data.forEach((item, index) => {
-                let row = `<tr><td>${index + 1}</td>`;
-                Object.keys(item).forEach(key => {
-                    row += `<td>${item[key] || "-"}</td>`;
+        var map = L.map('map').setView([-8.45, 118.73], 12); // Atur titik awal peta
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var unitColors = {
+            "44310": "red",
+            "44320": "blue",
+            "44330": "green",
+            "44340": "orange"
+        };
+
+        fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLjmWOFiahYHGwinXnaRKos5J4ZxK9OxixauxGIFI6_SCbk44WlwEinZi6gdH5dgyTLYuCHMQ7MecoDWIyJKMW1Z17ECjR4WdUDWOg-Ss5jludWCf0jTu9lajp0MhgQ1Q-Vqmv_-nUu4XfTUn6KiC-CiJECdhF48pI2ZEmsgtOf2eKqCBBj-nvPizgKAHPC8tU7n_uWJ5QWMS3efgyQVxjf5rp96A0sGQs7EgZyS_HpktY0UMoxuYAhhDnK6ylgCE1OApKJp57qESq0F2X3VU_1cQcpWTQ&lib=M386gyJTf4dREJIDn1iBlh5s2v4Ew1lTR')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(row => {
+                    let koordinat = row["KOORDINAT BARU"].split(",").map(Number);
+                    let idUnit = row["ID & UNIT"].split(" / "); 
+                    let unit = idUnit[1];
+
+                    let nama = row["NAMA"] || "Tidak diketahui";  // Pastikan ada kolom NAMA di data
+                    let alamat = row["ALAMAT"] || "Tidak tersedia"; // Pastikan ada kolom ALAMAT di data
+
+                    if (!isNaN(koordinat[0]) && !isNaN(koordinat[1])) {
+                        let markerIcon = L.icon({
+                            iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${unitColors[unit] || 'grey'}.png`,
+                            iconSize: [25, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        });
+
+                        L.marker(koordinat, { icon: markerIcon }).addTo(map)
+                            .bindTooltip(
+                                `<b>ID & UNIT:</b> ${row["ID & UNIT"]} <br>
+                                 <b>Nama:</b> ${nama} <br>
+                                 <b>Alamat:</b> ${alamat}`,
+                                { permanent: false, direction: "right" }
+                            );
+                    }
                 });
-                row += "</tr>";
-                tableBody.innerHTML += row;
-            });
-        })
-        .catch(error => console.error("Error fetching data:", error));
+            })
+            .catch(error => console.error('Error fetching data:', error));
     </script>
-     <nav>
-        <p style="text-align:center;"><a href="halaman1.html" class="button">Kembali Menu Home</a></p>
-    </nav>
 </body>
 </html>
